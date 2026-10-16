@@ -35,9 +35,9 @@
     
     .btn-group { display: grid; grid-template-columns: repeat(auto-fit, minmax(80px, 1fr)); gap: 8px; margin-top: 8px; }
     .option-btn {
-      background: #0f172a; border: 1px solid var(--border); color: var(--text-main); padding: 10px 4px; border-radius: 8px; text-align: center; cursor: pointer; font-size: 0.82rem; transition: all 0.2s;
+      background: #0f172a; border: 1px solid var(--border); color: var(--text-main); padding: 12px 4px; border-radius: 8px; text-align: center; cursor: pointer; font-size: 0.82rem; transition: all 0.2s; outline: none; -webkit-tap-highlight-color: transparent;
     }
-    .option-btn.selected { background: var(--primary); border-color: var(--primary); font-weight: bold; }
+    .option-btn.selected { background: var(--primary) !important; border-color: var(--primary) !important; font-weight: bold; color: #ffffff; }
 
     .btn-submit {
       width: 100%; background: var(--primary); color: white; border: none; padding: 14px; border-radius: 8px; font-size: 1.05rem; font-weight: bold; cursor: pointer; transition: background 0.2s; margin-top: 10px;
@@ -105,40 +105,40 @@
     <div class="form-group">
       <label>3. 幅の広さ</label>
       <div class="btn-group" id="group-width">
-        <div class="option-btn" data-value="narrow">細め</div>
-        <div class="option-btn" data-value="normal">普通</div>
-        <div class="option-btn" data-value="wide">広め</div>
-        <div class="option-btn selected" data-value="none">選択しない</div>
+        <button type="button" class="option-btn" data-value="narrow" onclick="selectOption(this)">細め</button>
+        <button type="button" class="option-btn" data-value="normal" onclick="selectOption(this)">普通</button>
+        <button type="button" class="option-btn" data-value="wide" onclick="selectOption(this)">広め</button>
+        <button type="button" class="option-btn selected" data-value="none" onclick="selectOption(this)">選択しない</button>
       </div>
     </div>
 
     <div class="form-group">
       <label>4. 甲の高さ</label>
       <div class="btn-group" id="group-instep">
-        <div class="option-btn" data-value="low">低め</div>
-        <div class="option-btn" data-value="normal">普通</div>
-        <div class="option-btn" data-value="high">高め</div>
-        <div class="option-btn selected" data-value="none">選択しない</div>
+        <button type="button" class="option-btn" data-value="low" onclick="selectOption(this)">低め</button>
+        <button type="button" class="option-btn" data-value="normal" onclick="selectOption(this)">普通</button>
+        <button type="button" class="option-btn" data-value="high" onclick="selectOption(this)">高め</button>
+        <button type="button" class="option-btn selected" data-value="none" onclick="selectOption(this)">選択しない</button>
       </div>
     </div>
 
     <div class="form-group">
       <label>5. つま先の形状</label>
       <div class="btn-group" id="group-toe">
-        <div class="option-btn" data-value="egyptian">親指が長い (エジプト)</div>
-        <div class="option-btn" data-value="roman">人差し指が長い (ギリシャ)</div>
-        <div class="option-btn" data-value="greek">指が揃っている (スクエア)</div>
-        <div class="option-btn selected" data-value="none">選択しない</div>
+        <button type="button" class="option-btn" data-value="egyptian" onclick="selectOption(this)">親指が長い (エジプト)</button>
+        <button type="button" class="option-btn" data-value="roman" onclick="selectOption(this)">人差し指が長い (ギリシャ)</button>
+        <button type="button" class="option-btn" data-value="greek" onclick="selectOption(this)">指が揃っている (スクエア)</button>
+        <button type="button" class="option-btn selected" data-value="none" onclick="selectOption(this)">選択しない</button>
       </div>
     </div>
 
     <div class="form-group">
       <label>6. 求めるソール特性</label>
       <div class="btn-group" id="group-perf">
-        <div class="option-btn" data-value="soft">ソフト（グリップ重視）</div>
-        <div class="option-btn" data-value="allround">オールラウンド</div>
-        <div class="option-btn" data-value="hard">ハード（エッジング重視）</div>
-        <div class="option-btn selected" data-value="none">選択しない</div>
+        <button type="button" class="option-btn" data-value="soft" onclick="selectOption(this)">ソフト（グリップ重視）</button>
+        <button type="button" class="option-btn" data-value="allround" onclick="selectOption(this)">オールラウンド</button>
+        <button type="button" class="option-btn" data-value="hard" onclick="selectOption(this)">ハード（エッジング重視）</button>
+        <button type="button" class="option-btn selected" data-value="none" onclick="selectOption(this)">選択しない</button>
       </div>
     </div>
 
@@ -200,13 +200,12 @@
 
 <script>
 const ADMIN_PASSCODE = "Shibuya1010";
-https://script.google.com/macros/s/AKfycbxIWdvdIpQAst8SfYN7XNwS-BtBn7s7GjBBoCqJ5_SQ8B5iQR9l5IuMKIYlG9XI7NW_dA/exec
-const GAS_API_URL = "YOUR_GAS_WEB_APP_URL_HERE"; 
+const GAS_API_URL = "YOUR_GAS_WEB_APP_URL_HERE"; https://script.google.com/macros/s/AKfycbxIWdvdIpQAst8SfYN7XNwS-BtBn7s7GjBBoCqJ5_SQ8B5iQR9l5IuMKIYlG9XI7NW_dA/exec
 
-let lastSavedRow = null; // スプレッドシート上の行番号（評価更新用）
+let lastSavedRow = null;
 let currentRating = 0;
 
-// 全23モデルのデータベース（スプレッドシート完全準拠）
+// 全23モデルのデータベース
 const SHOE_DATABASE = [
   {
     id: 1, brand: "UNPARALLEL", name: "アンパラレル「エンゲージVCS」", categoryLevel: 1, sizeUnit: "US", sizeOffset: 0.5,
@@ -348,15 +347,13 @@ const SHOE_DATABASE = [
   }
 ];
 
-// UI選択状態切り替え
-document.querySelectorAll('.btn-group').forEach(group => {
-  group.addEventListener('click', (e) => {
-    if (e.target.classList.contains('option-btn')) {
-      group.querySelectorAll('.option-btn').forEach(btn => btn.classList.remove('selected'));
-      e.target.classList.add('selected');
-    }
-  });
-});
+// 選択ボタン切り替え関数
+function selectOption(btnElement) {
+  const group = btnElement.parentElement;
+  const buttons = group.querySelectorAll('.option-btn');
+  buttons.forEach(btn => btn.classList.remove('selected'));
+  btnElement.classList.add('selected');
+}
 
 function getSelectedValue(groupId) {
   const selected = document.querySelector(`#${groupId} .option-btn.selected`);
@@ -499,7 +496,6 @@ function submitRating() {
   }
   const comment = document.getElementById('rating-comment').value;
   
-  // GASへ評価データを送信（直近の行を更新）
   if (lastSavedRow) {
     sendDataToSpreadsheet({
       action: "updateRating",
@@ -517,9 +513,12 @@ function sendDataToSpreadsheet(payload) {
   
   fetch(GAS_API_URL, {
     method: "POST",
-    mode: "no-cors", // CORS制限回避
+    mode: "no-cors",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(payload)
+  }).then(() => {
+    // 初回保存時は行番号の代わりに仮フラグとして保持
+    lastSavedRow = 2; // GAS側で最新行を特定する簡易対応
   }).catch(err => console.error("GAS Error:", err));
 }
 
